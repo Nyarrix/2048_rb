@@ -39,7 +39,7 @@ class Nisenyoujuhachi
 				tmp_field = move_tiles(@field.map(&:reverse))
 				tmp_field = tmp_field.map(&:reverse)
 				@field = tmp_field
-			when 'end' then
+			when 'quit' then
 				return
 			else
 				puts 'invalid input'
@@ -52,18 +52,19 @@ class Nisenyoujuhachi
 	end
 
 	def move_tiles(tmp_field)
+		tmp_field = left_move(tmp_field)
 		tmp_field = left_add(tmp_field)
 		tmp_field = left_move(tmp_field)
 		tmp_field
 	end
 
 	def left_add(tmp_field)
-    for i in 0..FIELD_SIZE - 1
-      for j in 1..FIELD_SIZE - 1
-				tmp = field[i][j]
-				if field[i][j - 1] == tmp
-						field[i][j - 1] += tmp
-						field[i][j] = 0
+    for row in 0..FIELD_SIZE - 1
+      for column in 1..FIELD_SIZE - 1
+				tmp = tmp_field[row][column]
+				if tmp_field[row][column - 1] == tmp
+						tmp_field[row][column - 1] += tmp
+						tmp_field[row][column] = 0
 				end
 			end
 		end
@@ -71,14 +72,11 @@ class Nisenyoujuhachi
 	end
 
 	def left_move(tmp_field)
-		# puts(tmp_field)
     for row in 0..FIELD_SIZE - 1
 			tmp_vector = tmp_field[row]
 			for column in 1..FIELD_SIZE - 1
 				for i in 0..column - 1
-					# print "#{tmp_vector}\n"
 					if tmp_vector[i..column-1].count(0) == tmp_vector[i..column-1].length
-						
 						tmp_vector[i] = tmp_vector[column]
 						tmp_vector[column] = 0
 					end
@@ -93,7 +91,6 @@ class Nisenyoujuhachi
     for i in 0..FIELD_SIZE - 1
       for j in 0..FIELD_SIZE - 1
 				print sprintf("%5d ", @field[i][j])
-				# print @field[i, j]
       end
         puts ""
     end
@@ -105,7 +102,6 @@ class Nisenyoujuhachi
 			r = rand(@zero_index_list.size)
 			x = @zero_index_list[r][0]
 			y = @zero_index_list[r][1] 
-			# puts("#{x} #{y}")
 
 			@field[x][y] = generate_4_or_2
 		end
