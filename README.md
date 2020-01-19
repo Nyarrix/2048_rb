@@ -7,8 +7,8 @@
 # Keymap
 
 - "h": left
-- "j": up
-- "k": down
+- "k": up
+- "j": down
 - "l": right
 - "quit": quit game
 
